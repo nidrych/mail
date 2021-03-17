@@ -1,0 +1,65 @@
+﻿@model FeedReceiverModel
+
+<form asp-action="Save" method="post" id="main-form">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input required type="email" class="form-control" id="email" name="Email" placeholder="name@example.com" value="@Model.Email">
+                <span> We'll never share email with anyone else</span>
+                <div class="email-preview-container">
+                    <div id="email-preview">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Rss url</label>      
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" onkeyup="onRssUrlKeyUp(event)" id="rss-input" placeholder="https://example.siterss.xml">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="onRssUrlAddClick(event)">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div id="rss-list-container" class="email-preview-container">
+                <ul id="rss-list" class="list-group">
+                    @foreach (var item in Model.NewsFeed)
+                    {
+                        <li class="list-group-item">@item</li>
+                    }
+                </ul>
+
+                @{
+                    var index = 0;
+
+                    @foreach (var item in Model.NewsFeed)
+                    {
+                        <input type="hidden" name="RssUrls[@index]" value="@item" />
+                        index++;
+                    }
+                }
+                <input type="hidden" id="current-index" value="@index" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).on("keydown", ":input:not(textarea):not(:submit)", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}

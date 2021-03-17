@@ -1,0 +1,10 @@
+﻿@using FeedMail.EmailTemplates;
+@using System.Collections.Generic;
+
+@model IEnumerable<RssFeedEmailModel>
+
+@foreach (var rss in Model)
+{
+<h3>@rss.Title</h3>
+<p>@rss.Content</p>
+}
